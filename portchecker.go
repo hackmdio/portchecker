@@ -49,7 +49,7 @@ func (n *NetPort) GetNetworkAddress() string {
 }
 
 func ParseNetworkString(inp string) []string {
-	reg, err := regexp.Compile(`^(?:([a-z]+):\/\/)?(?:(?:\w+(?::\w+)?@)?([A-Za-z0-9.]+))(?::([0-9]+))?$`)
+	reg, err := regexp.Compile(`^(?:([a-z]+):\/\/)?(?:(?:\w+(?::\w+)?@)?([A-Za-z0-9.]+))(?::([0-9]+))?.*$`)
 	if err != nil {
 		fmt.Printf("%s (%s), error: %s", "Cannot parse network stirng", inp, err)
 		os.Exit(1)
