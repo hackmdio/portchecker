@@ -22,6 +22,7 @@ func TestParseStringToNetPort(t *testing.T) {
 		{"postgres://asdas.asdfasf.asdf.asdf", []string{"postgres://asdas.asdfasf.asdf.asdf", "tcp", "asdas.asdfasf.asdf.asdf", "5432"}},
 		{"redis://localhost:1234", []string{"redis://localhost:1234", "tcp", "localhost", "1234"}},
 		{"redis://localhost", []string{"redis://localhost", "tcp", "localhost", "6379"}},
+		{"redis://test-cache", []string{"redis://test-cache", "tcp", "test-cache", "6379"}},
 		{"", []string{"", "tcp", "localhost", "80"}},
 	}
 
