@@ -95,22 +95,40 @@ func makeDefaultRetryOptions() *RetryOptions {
 
 var retryOptions = makeDefaultRetryOptions()
 var conStr string
+var conStrFromEnv string
 
 func init() {
 	flag.IntVar(&retryOptions.attempt, "attempt", 5, "retry attempt")
 	flag.Int64Var(&retryOptions.waitTime, "wait", 3, "if connecting fail, wait how many second to retry")
 	flag.StringVar(&conStr, "constr", "", "try to connect")
+	flag.StringVar(&conStrFromEnv, "env", "", "environment with connection string")
 }
 
 func main() {
 	flag.Parse()
 
-	if conStr == "" {
-		fmt.Println("Error: must specific constr")
+	// (conStr == "") xor (conStrFromEnv == "")
+	if (conStr == "") == (conStrFromEnv == "") {
+		fmt.Println("Error: must specific one type of conStr")
 		os.Exit(1)
 	}
 
-	netPort := ParseNetworkStringToNetPort(conStr)
+	var netPort *NetPort
+	if conStr != "" {
+		netPort = ParseNetworkStringToNetPort(conStr)
+	}
+	if conStrFromEnv != "" {
+		envValue := os.Getenv(conStrFromEnv)
+		if envValue == "" {
+			fmt.Printf("Error: value of env: %s is empty!", conStrFromEnv)
+			os.Exit(1)
+		}
+		netPort = ParseNetworkStringToNetPort(envValue)
+	}
+	if netPort == nil {
+		fmt.Printf("Error: cannot parsed connection string.")
+		os.Exit(1)
+	}
 
 	for i := 0; i < retryOptions.attempt; i++ {
 		c, err := net.Dial(netPort.protocol, netPort.GetNetworkAddress())
