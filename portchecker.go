@@ -15,7 +15,7 @@ var conStrFromEnv string
 
 func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	flag.IntVar(&internal.DefaultRetryOptions.Attempt, "Attempt", 5, "retry Attempt")
+	flag.IntVar(&internal.DefaultRetryOptions.Attempt, "attempt", 5, "retry Attempt")
 	flag.Int64Var(&internal.DefaultRetryOptions.WaitTime, "wait", 3, "if connecting fail, wait how many second to retry")
 	flag.StringVar(&conStr, "constr", "", "try to connect")
 	flag.StringVar(&conStrFromEnv, "env", "", "environment with connection string")
