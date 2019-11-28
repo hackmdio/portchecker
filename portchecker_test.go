@@ -27,6 +27,7 @@ func TestParseStringToNetPort(t *testing.T) {
 		{"mysql://testuser:password@mysql-host.local/db", []string{"mysql://testuser:password@mysql-host.local/db", "tcp", "mysql-host.local", "3306"}},
 		{"mysql://testuser:password@mysql-host.local:1234/db", []string{"mysql://testuser:password@mysql-host.local:1234/db", "tcp", "mysql-host.local", "1234"}},
 		{"mysql://hackmd:password@host:3306/hackmd?charset=utf8mb4", []string{"mysql://hackmd:password@host:3306/hackmd?charset=utf8mb4", "tcp", "host", "3306"}},
+		{"mysql://u-s_er:p!%ass@hack-md_db.local:1234/h_a-ckmd", []string{"mysql://u-s_er:p!%ass@hack-md_db.local:1234/h_a-ckmd", "tcp", "hack-md_db.local", "1234"}},
 		{"redis://localhost:1234", []string{"redis://localhost:1234", "tcp", "localhost", "1234"}},
 		{"redis://localhost", []string{"redis://localhost", "tcp", "localhost", "6379"}},
 		{"redis://test-cache", []string{"redis://test-cache", "tcp", "test-cache", "6379"}},
