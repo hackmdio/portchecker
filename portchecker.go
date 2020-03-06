@@ -4,14 +4,19 @@ import (
 	"flag"
 	"fmt"
 	"github.com/hackmdio/portchecker/internal"
+	"io/ioutil"
 	"log"
 	"net"
 	"os"
+	"strings"
 	"time"
 )
 
-var conStr string
-var conStrFromEnv string
+var (
+	conStr         string
+	conStrFromEnv  string
+	conStrFromFile string
+)
 
 func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
@@ -19,13 +24,14 @@ func init() {
 	flag.Int64Var(&internal.DefaultRetryOptions.WaitTime, "wait", 3, "if connecting fail, wait how many second to retry")
 	flag.StringVar(&conStr, "constr", "", "try to connect")
 	flag.StringVar(&conStrFromEnv, "env", "", "environment with connection string")
+	flag.StringVar(&conStrFromFile, "file", "", "file path that contains connection string")
 }
 
 func main() {
 	flag.Parse()
 
 	// conStr or conStrFromEnv should only set one
-	if (conStr == "") == (conStrFromEnv == "") {
+	if (conStr == "") && (conStrFromEnv == "") && (conStrFromFile == "") {
 		log.Fatalln("Error: must specific one type of conStr")
 	}
 
@@ -36,6 +42,9 @@ func main() {
 
 	attemptTime := internal.DefaultRetryOptions.Attempt
 	waitTime := internal.DefaultRetryOptions.WaitTime
+
+	fmt.Printf("Info: try to connect to %s://%s in port %s\n", netPort.Protocol, netPort.Address, netPort.Port)
+
 	for i := 0; i < attemptTime; i++ {
 		c, err := net.Dial(netPort.Protocol, netPort.GetNetworkAddress())
 		if err != nil {
@@ -61,6 +70,15 @@ func getNetPort() *internal.NetPort {
 			os.Exit(1)
 		}
 		return internal.ParseNetworkStringToNetPort(envValue)
+	}
+	if conStrFromFile != "" {
+		contents, err := ioutil.ReadFile(conStrFromFile)
+		if err != nil {
+			fmt.Printf("Error: can't read file %s", conStrFromFile)
+			os.Exit(1)
+		}
+		trimConnStr := strings.TrimSpace(string(contents))
+		return internal.ParseNetworkStringToNetPort(trimConnStr)
 	}
 	return nil
 }

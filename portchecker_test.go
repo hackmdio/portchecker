@@ -22,6 +22,8 @@ func TestParseStringToNetPort(t *testing.T) {
 		{"postgres://asdf:asdf@asdas.asdfasf.asdf.asdf", []string{"postgres://asdf:asdf@asdas.asdfasf.asdf.asdf", "tcp", "asdas.asdfasf.asdf.asdf", "5432"}},
 		{"postgres://asdf@asdas.asdfasf.asdf.asdf", []string{"postgres://asdf@asdas.asdfasf.asdf.asdf", "tcp", "asdas.asdfasf.asdf.asdf", "5432"}},
 		{"postgres://asdas.asdfasf.asdf.asdf", []string{"postgres://asdas.asdfasf.asdf.asdf", "tcp", "asdas.asdfasf.asdf.asdf", "5432"}},
+		{"postgres://localhost/db", []string{"postgres://localhost/db", "tcp", "localhost", "5432"}},
+		{"postgres://localhost:123/db", []string{"postgres://localhost:123/db", "tcp", "localhost", "123"}},
 		{"mysql://testuser:password@mysql-host.local", []string{"mysql://testuser:password@mysql-host.local", "tcp", "mysql-host.local", "3306"}},
 		{"mysql://testuser:password@mysql-host.local:1234", []string{"mysql://testuser:password@mysql-host.local:1234", "tcp", "mysql-host.local", "1234"}},
 		{"mysql://testuser:password@mysql-host.local/db", []string{"mysql://testuser:password@mysql-host.local/db", "tcp", "mysql-host.local", "3306"}},
