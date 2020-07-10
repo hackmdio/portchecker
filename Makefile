@@ -21,3 +21,8 @@ buildWindows386:
 
 buildWindowsAmd64:
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o dist/portchecker-windows-amd64.exe ./portchecker.go
+
+buildLinuxArm:
+	docker run --rm -v ${PWD}:/app/ -e CGO_ENABLED=0 -e GOOS=linux -e GOARCH=arm -w=/app/ golang:latest  go build -o dist/portchecker-linux-arm ./portchecker.go
+
+
