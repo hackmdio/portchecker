@@ -33,6 +33,12 @@ func TestParseStringToNetPort(t *testing.T) {
 		{"redis://localhost:1234", []string{"redis://localhost:1234", "tcp", "localhost", "1234"}},
 		{"redis://localhost", []string{"redis://localhost", "tcp", "localhost", "6379"}},
 		{"redis://test-cache", []string{"redis://test-cache", "tcp", "test-cache", "6379"}},
+		{"redis://:@test-cache", []string{"redis://:@test-cache", "tcp", "test-cache", "6379"}},
+		{"redis://:@test-cache/10", []string{"redis://:@test-cache/10", "tcp", "test-cache", "6379"}},
+		{"redis://:@test-cache:6380/10", []string{"redis://:@test-cache:6380/10", "tcp", "test-cache", "6380"}},
+		{"redis://:passw0rd@test-cache", []string{"redis://:passw0rd@test-cache", "tcp", "test-cache", "6379"}},
+		{"redis://:passw0rd@test-cache/10", []string{"redis://:passw0rd@test-cache/10", "tcp", "test-cache", "6379"}},
+		{"redis://:passw0rd@test-cache:6380/10", []string{"redis://:passw0rd@test-cache:6380/10", "tcp", "test-cache", "6380"}},
 		{"", []string{"", "tcp", "localhost", "80"}},
 	}
 
