@@ -7,6 +7,9 @@ prebuild:
 clean:
 	rm -rf dist
 
+release: all
+	cd dist && find . -type f -exec tar cvf {}.tar.gz {} \;
+
 buildLinux386:
 	CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -o dist/portchecker-linux-386 ./portchecker.go
 
