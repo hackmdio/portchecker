@@ -20,7 +20,7 @@ buildLinuxArm64:
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o dist/portchecker-linux-arm64 ./portchecker.go
 
 buildDarwinArm64:
-	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -o dist/portchecker-darwin-amd64 ./portchecker.go
+	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -o dist/portchecker-darwin-arm64 ./portchecker.go
 
 buildDarwinAmd64:
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o dist/portchecker-darwin-amd64 ./portchecker.go
