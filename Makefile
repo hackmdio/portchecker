@@ -4,6 +4,9 @@ all: prebuild buildLinux386 buildLinuxAmd64 buildLinuxArm64 buildDarwinArm64 bui
 prebuild:
 	mkdir -p dist
 
+clean:
+	rm -rf dist
+
 buildLinux386:
 	CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -o dist/portchecker-linux-386 ./portchecker.go
 
