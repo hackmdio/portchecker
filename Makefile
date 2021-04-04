@@ -1,5 +1,5 @@
 
-all: prebuild buildLinux386 buildLinuxAmd64 buildLinuxArm64 buildDarwinArm64 buildDarwinAmd64 buildWindows386 buildWindowsAmd64
+all: prebuild buildLinux386 buildLinuxAmd64 buildLinuxArm buildLinuxArm64 buildDarwinArm64 buildDarwinAmd64 buildWindows386 buildWindowsAmd64
 
 prebuild:
 	mkdir -p dist
@@ -15,6 +15,9 @@ buildLinux386:
 
 buildLinuxAmd64:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o dist/portchecker-linux-amd64 ./portchecker.go
+
+buildLinuxArm:
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -o dist/portchecker-linux-arm ./portchecker.go
 
 buildLinuxArm64:
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o dist/portchecker-linux-arm64 ./portchecker.go
